@@ -1,0 +1,10 @@
+<% @products.each do |product| %>
+	<div class="col-md-4">
+		<div class="well well-white">
+			<label><%= product.name %></label><br />
+			<label>Rs. <%= product.price %></label><br />
+			<%= link_to 'Add to cart', "/add_to_cart?product_id=#{product.id}" %>
+		</div>
+	</div>
+<% end %>
+

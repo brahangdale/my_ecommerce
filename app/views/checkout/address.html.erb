@@ -1,0 +1,98 @@
+<div class="row">
+	<div class="col-md-7">
+		<%= form_for Address.new, url: '/checkout/shipping' do |f| %>
+			<div class="form-group">
+				<label>Name</label>
+				<%= f.text_field :name, class: 'form-control', required: true %>
+			</div>
+
+			<div class="form-group">
+				<label>Address Line 1</label>
+				<%= f.text_field :address_line_1, class: 'form-control', required: true %>
+			</div>
+
+			<div class="form-group">
+				<label>Address Line 2</label>
+				<%= f.text_field :address_line_2, class: 'form-control' %>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>City</label>
+						<%= f.text_field :city, class: 'form-control', required: true %>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>State</label>
+						<%= f.select :state, options_for_select(CS.states('US').invert), {}, class: 'form-control' %>
+					</div>
+				</div>
+			</div>
+			
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Zipcode</label>
+						<%= f.text_field :zipcode, class: 'form-control', required: true %>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Country</label>
+						<%= f.select :country, options_for_select(CS.countries.invert, selected: 'US' ), {}, class: 'form-control' %>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label>Mobile Number:</label>
+				<%= f.text_field :mobile_number, class: 'form-control', required: true %>
+			</div>
+
+			<%= f.submit "Continue" %>
+		<% end %>
+
+
+	</div>
+	<div class="col-md-5">
+		<% @order.items.each do |item| %>
+			<% product = item.product %>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-9"><b><%= product.name %></b></label></div>
+					<div class="col-md-3">Rs. <%= product.price %></label></div>
+				</div>
+			</div>
+		<% end %>
+		<div class="row">
+			<div class="col-md-12">
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-9 text-right">
+					<b>Order Total</label></div>
+				<div class="col-md-3">Rs. <%= @order.total %></label></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#new_address").validate();
+
+	var country = document.getElementById("address_country");
+
+	// When a user chooses a country, send a GET 
+	// request to the server with the country's id as a parameter
+	country.addEventListener("change", function(){
+	  jQuery.ajax({
+	    url: "/states?country=" + country.value,
+	    type: "GET"
+	  })
+	})
+</script>

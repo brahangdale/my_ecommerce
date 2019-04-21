@@ -1,0 +1,26 @@
+
+<% @order.items.each do |item| %>
+	<% product = item.product %>
+	<div class="row">
+		<div class="col-md-7">
+			<div class="col-md-10"><b><%= product.name %></b></label></div>
+			<div class="col-md-2">Rs. <%= product.price %></label></div>
+		</div>
+		<div class="col-md-5"></div>
+	</div>
+<% end %>
+<div class="row">
+	<div class="col-md-7">
+		<hr>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-7">
+		<div class="col-md-10 text-right">
+			<b>Order Total</label></div>
+		<div class="col-md-2">Rs. <%= @order.total %></label></div>
+	</div>
+	<div class="col-md-5"></div>
+</div>
+
+<%= link_to "Containue Shopping", '/' %> &nbsp;&nbsp;|&nbsp;&nbsp; <%= link_to "Place Order", "/checkout/address" %> 
